@@ -1,0 +1,30 @@
+package Fileoutput;
+import java.io.*;
+public class OutputStream {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		File f=new File("e:\\readMe.txt");
+		FileOutputStream fos=null;
+		try {
+			fos=new FileOutputStream(f);
+			String s="Hello world this is test for output stream\r\n";
+			String ss="China is a great nation";
+		
+			//how to covert String into byte array
+			fos.write(s.getBytes());
+			fos.write(ss.getBytes());
+		}catch(Exception e) {
+			
+		}finally {
+			try {
+				fos.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+
+}

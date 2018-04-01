@@ -1,0 +1,32 @@
+package com.textFile;
+import java.io.*;
+public class TextReaderCopy {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		//file reader from 
+		FileReader fr=null;
+		FileWriter fw=null;
+		int n=0;//this n is not byte number, it is char number
+		
+		
+		try {
+		fr=new FileReader("D:/textRead.txt");
+		fw=new FileWriter("E:/textRead.txt");
+		char c[]=new char[1024];
+		while((n=fr.read(c))!=-1)
+		{
+//			String s=new String(c,0,n);//read till the end of n, no more mess
+//			System.out.println(s);
+			fw.write(c);
+		}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally
+		{
+			fr.close();
+			fw.close();
+		}
+	}
+
+}
