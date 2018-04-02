@@ -1,0 +1,43 @@
+/*
+ * buffered String flow example
+ */
+package com.stringFile;
+import java.io.*;
+public class FileString {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		BufferedReader br=null;
+		BufferedWriter bw=null;
+		
+		try {
+			//first create fileReader and update to bufferedReader
+			FileReader fr=new FileReader("D:/readMe.txt");
+			br=new BufferedReader(fr);
+			//loop read
+			String s=" ";
+			while((s=br.readLine())!=null)
+			{
+//				System.out.println(s);
+				//write to Destination. create file writer
+				FileWriter fw=new FileWriter("E:/readMe.txt");
+				bw=new BufferedWriter(fw);
+				bw.write(s);
+				
+			}
+		
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally
+		{
+			try {
+				br.close();
+				bw.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+}

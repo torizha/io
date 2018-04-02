@@ -1,0 +1,131 @@
+/*
+ * My NotePad GUI & save
+ */
+package com.Npad;
+import java.io.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class NotePad extends JFrame implements ActionListener {
+	//define components
+	JTextArea jta=null;
+	JMenuBar jmb=null;
+	JMenu jm1=null;
+	JMenuItem jmi1=null;
+	JMenuItem jmi2=null;
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		NotePad np=new NotePad();
+	}
+	public NotePad()
+	{
+		jta=new JTextArea();
+		jmb=new JMenuBar();
+		jm1=new JMenu("File");
+		jm1.setMnemonic('F');
+		jmi1=new JMenuItem("Open",new ImageIcon("pig.jpg"));
+		//register Listener
+		jmi1.addActionListener(this);
+		jmi1.setActionCommand("Open");
+		
+		//save menu
+		jmi2=new JMenuItem("Save");
+		//register Listener
+		jmi2.addActionListener(this);;
+		jmi2.setActionCommand("Save");
+		//add into JFrame
+		this.setJMenuBar(jmb);
+		//add jm1 to jmb
+		jmb.add(jm1);
+		//add itme in mmenu
+		jm1.add(jmi1);
+		jm1.add(jmi2);
+		
+		//create jta
+		jta=new JTextArea();
+		//put into JFrame
+		this.add(jta);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(400,300);
+		this.setVisible(true);
+	
+	
+	}
+	@Override//must know which menuitems is clicked
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		//check which menu is clicked
+		if(e.getActionCommand().equals("Open"))
+		{
+//			System.out.println("Open");
+			//create JFileChooser
+			JFileChooser jfc1=new JFileChooser();
+			jfc1.setDialogTitle("Please choose file...");
+			jfc1.showOpenDialog(null);
+			jfc1.setVisible(true);
+			//find the file path
+			String filename=jfc1.getSelectedFile().getAbsolutePath();
+			FileReader fr=null;
+			BufferedReader br=null;
+			try {
+				fr=new FileReader(filename);
+				br=new BufferedReader(fr);
+				String s="";
+				String allCon="";
+				while((s=br.readLine())!=null)
+				{
+					allCon+=s+"\r\n";
+					
+				}
+				//put on jta
+				jta.setText(allCon);
+				}catch(Exception e2) {
+				 e2.printStackTrace();
+				}finally {
+					try {
+						br.close();
+						fr.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			
+			}
+			else if(e.getActionCommand().equals("Save"))
+			{
+				JFileChooser jfc=new JFileChooser();
+				jfc.setDialogTitle("Save as...");
+				jfc.showSaveDialog(null);
+				jfc.setVisible(true);
+				//Destination for save
+				String file=jfc.getSelectedFile().getAbsolutePath();
+				//write to Destination
+				FileWriter fw=null;
+				BufferedWriter bw=null;
+				try {
+					fw=new FileWriter(file);
+					bw=new BufferedWriter(fw);
+					//optimize
+					bw.write(this.jta.getText());
+				}catch(Exception e3)
+				{
+					e3.printStackTrace();
+				}finally
+				{
+					try {
+						bw.close();
+						fw.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+			
+		}
+	}
+
+	
